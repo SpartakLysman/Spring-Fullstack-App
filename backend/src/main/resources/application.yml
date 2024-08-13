@@ -1,0 +1,25 @@
+server:
+  port: 8080
+  error:
+    include-message: always
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5332/customer
+    username: amigoscode
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: false #none
+  main:
+    web-application-type: servlet
+
+#server:
+#  port: 8080 #if port: '80' then we can omit port specifying when sending a request. 8080 - localhost:8080/... . or 80 - localhost/... .
+
+
