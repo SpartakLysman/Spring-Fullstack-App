@@ -9,8 +9,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import java.util.List;
-import java.util.Locale;
 import java.util.Random;
 
 @SpringBootApplication
@@ -54,18 +52,13 @@ public class Main {
             customerRepository.save(customer);
         };
     }
-
-
-
-
-    /*@Bean("foo") // '("foo")' - to change the name of Bean
+/*@Bean("foo") // '("foo")' - to change the name of Bean
     public Foo getFoo() {
         return new Foo("bar");
     }
 
     record Foo(String name) {}*/
 }
-
 /*
     @GetMapping("/greet")
     public GreetResponse greet(
