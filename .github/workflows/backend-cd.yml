@@ -34,7 +34,7 @@ jobs:
       - name: Slack commit message and sha
         run: >
           curl -X POST -H 'Content-type: application/json'
-          --data '{"text":":github: https://github.com/amigoscode/spring-boot-full-stack/commit/${{ github.sha }} - ${{ github.event.head_commit.message }}"}' 
+          --data '{"text":"github: https://github.com/SpartakLysman/Spring-Fullstack-App/commit/${{ github.sha }} - ${{ github.event.head_commit.message }}' 
           ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Send Slack Message
         run: >
@@ -64,7 +64,7 @@ jobs:
       - name: Send Slack Message
         run: >
           curl -X POST -H 'Content-type: application/json' 
-          --data '{"text":":docker: Image tag:${{steps.build-number.outputs.BUILD_NUMBER}} pushed to https://hub.docker.com/repository/docker/amigoscode/amigoscode-api"}' 
+          --data '{"text":":docker: Image tag:${{steps.build-number.outputs.BUILD_NUMBER}} pushed to https://hub.docker.com/repository/docker/spartaklysman/amigoscode-api"}' 
           ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Update Dockerrun.aws.json api image tag with new build number
         run: |
@@ -92,7 +92,7 @@ jobs:
       - name: Send Slack Message
         run: >
           curl -X POST -H 'Content-type: application/json' 
-          --data '{"text":":githubloading: Committing to repo https://github.com/amigoscode/spring-boot-full-stack/"}' 
+          --data '{"text":":githubloading: Committing to repo https://github.com/SpartakLysman/Spring-Fullstack-App/"}' 
           ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Commit and push Dockerrun.aws.json
         run: |
