@@ -1,14 +1,18 @@
-import {Wrap, WrapItem, Spinner, Text} from "@chakra-ui/react";
+import {
+    Wrap,
+    WrapItem,
+    Spinner,
+    Text
+} from '@chakra-ui/react';
 import SidebarWithHeader from "./components/shared/SideBar.jsx";
-import {useEffect, useState} from "react";
-import {getCustomers} from "./services/client.js";
-import CardWithImage from "./components/Card.jsx";
+import { useEffect, useState } from 'react';
+import { getCustomers } from "./services/client.js";
+import CardWithImage from "./components/Card";
 
 const App = () => {
 
     const [customers, setCustomers] = useState([]);
     const [loading, setLoading] = useState(false);
-
 
     useEffect(() => {
         setLoading(true);
@@ -26,7 +30,7 @@ const App = () => {
             <SidebarWithHeader>
                 <Spinner
                     thickness='4px'
-                    speed='0.65'
+                    speed='0.65s'
                     emptyColor='gray.200'
                     color='blue.500'
                     size='xl'
@@ -35,7 +39,7 @@ const App = () => {
         )
     }
 
-    if (customers.length <= 0) {
+    if(customers.length <= 0) {
         return (
             <SidebarWithHeader>
                 <Text>No customers available</Text>
@@ -48,7 +52,10 @@ const App = () => {
             <Wrap justify={"center"} spacing={"30px"}>
                 {customers.map((customer, index) => (
                     <WrapItem key={index}>
-                        <CardWithImage {...customer} />
+                        <CardWithImage
+                            {...customer}
+                            imageNumber={index}
+                        />
                     </WrapItem>
                 ))}
             </Wrap>

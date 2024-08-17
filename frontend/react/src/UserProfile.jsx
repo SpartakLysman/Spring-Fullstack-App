@@ -1,4 +1,4 @@
-const UserProfile = ({ name, age, gender, imageNumber,  ...props }) => {
+const UserProfile = ({ name, age, gender, imageNumber, ...props }) => {
 
     gender = gender === "MALE" ? "men" : "women"
 
