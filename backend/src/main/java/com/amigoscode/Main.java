@@ -16,8 +16,7 @@ import java.util.Random;
 public class Main {
 
     public static void main(String[] args) {
-        /*
-        Never do this:
+      /*Never do this:
         CustomerService customerService =
                 new CustomerService(new CustomerDataAccessService());
         CustomerController customerController =
@@ -57,65 +56,62 @@ public class Main {
     }
 
 
-
-
-    /*@Bean("foo") // '("foo")' - to change the name of Bean
-    public Foo getFoo() {
-        return new Foo("bar");
-    }
-
-    record Foo(String name) {}*/
+/*@Bean("foo") // '("foo")' - to change the name of Bean
+public Foo getFoo() {
+    return new Foo("bar");
 }
 
-/*
-    @GetMapping("/greet")
-    public GreetResponse greet(
-            @RequestParam(value = "name", required = false) String name) {
-        String greetMassage = name == null ||  name.isBlank() ? "Hello" : "Hello " + name;
-        GreetResponse response = new GreetResponse(
-                greetMassage,
-                List.of("Java", "Golang", "Javascript"),
-                new Person("Alex", 28, 30_000)
-        );
-        return response;
-    }
+record Foo(String name) {}*/
+}
 
-    record Person(String name, int age, double savings) {
-    }
+/*@GetMapping("/greet")
+public GreetResponse greet(
+        @RequestParam(value = "name", required = false) String name) {
+    String greetMassage = name == null ||  name.isBlank() ? "Hello" : "Hello " + name;
+    GreetResponse response = new GreetResponse(
+            greetMassage,
+            List.of("Java", "Golang", "Javascript"),
+            new Person("Alex", 28, 30_000)
+    );
+    return response;
+}
 
-    record GreetResponse(
-            String greet,
-            List<String> favProgrammingLanguages,
-            Person person) {
-    }
-	class GreetResponse {
-		private final String greet;
+record Person(String name, int age, double savings) {
+}
 
-		public GreetResponse(String greet) {
-			this.greet = greet;
-		}
+record GreetResponse(
+        String greet,
+        List<String> favProgrammingLanguages,
+        Person person) {
+}
+class GreetResponse {
+private final String greet;
 
-		public String getGreet() {
-			return greet;
-		}
+public GreetResponse(String greet) {
+    this.greet = greet;
+}
 
-		@Override
-		public boolean equals(Object o) {
-			if (this == o) return true;
-			if (o == null || getClass() != o.getClass()) return false;
-			GreetResponse that = (GreetResponse) o;
-			return Objects.equals(getGreet(), that.getGreet());
-		}
+public String getGreet() {
+    return greet;
+}
 
-		@Override
-		public int hashCode() {
-			return Objects.hash(getGreet());
-		}
+@Override
+public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    GreetResponse that = (GreetResponse) o;
+    return Objects.equals(getGreet(), that.getGreet());
+}
 
-		@Override
-		public String toString() {
-			return "GreetResponse{" +
-					"greet='" + greet + '\'' +
-					'}';
-		}
-	}*/
+@Override
+public int hashCode() {
+    return Objects.hash(getGreet());
+}
+
+@Override
+public String toString() {
+    return "GreetResponse{" +
+            "greet='" + greet + '\'' +
+            '}';
+}
+}*/
