@@ -82,13 +82,13 @@ const SidebarContent = ({onClose, ...rest}) => {
             h="full"
             {...rest}>
             <Flex h="20" flexDirection="column" alignItems="center" mx="8" mb={75} mt={2} justifyContent="space-between">
-                <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold" mb={5}>
-                    Dashboard
+                <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold" mb={4}>
+                    Home👽
                 </Text>
                 <Image
                     borderRadius='full'
-                    boxSize='110px'
-                    src='https://raw.githubusercontent.com/SpartakLysman/Spring-Fullstack-App/main/logo.png'
+                    boxSize='130px'
+                    src='https://raw.githubusercontent.com/SpartakLysman/Spring-Fullstack-App/main/newlogo.png'
                     alt='Amigoscode'
                 />
                 <CloseButton display={{base: 'flex', md: 'none'}} onClick={onClose}/>
