@@ -87,8 +87,8 @@ const SidebarContent = ({onClose, ...rest}) => {
                 </Text>
                 <Image
                     borderRadius='full'
-                    boxSize='130px'
-                    src='https://raw.githubusercontent.com/SpartakLysman/Spring-Fullstack-App/main/newlogo.png'
+                    boxSize='100px'
+                    src='https://raw.githubusercontent.com/SpartakLysman/Spring-Fullstack-App/main/logo.png'
                     alt='Amigoscode'
                 />
                 <CloseButton display={{base: 'flex', md: 'none'}} onClick={onClose}/>

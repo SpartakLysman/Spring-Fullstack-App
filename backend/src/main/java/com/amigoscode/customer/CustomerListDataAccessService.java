@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository("list")
-public class CustomerListDataAccessService implements CustomerDAO{
+public class CustomerListDataAccessService implements CustomerDAO {
 
     // db  |  SHOULD NOT USE THIS, IT IS JUST TO TEST QUICKLY
     private static List<Customer> customers;
@@ -18,12 +18,14 @@ public class CustomerListDataAccessService implements CustomerDAO{
                 1L,
                 "Alex",
                 "alex@gmail.com",
+                "password",
                 21,
                 Gender.MALE);
         Customer jamila = new Customer(
                 2L,
                 "Jamila",
                 "jamila@gmail.com",
+                "password",
                 19,
                 Gender.MALE);
         customers.add(alex);
@@ -66,5 +68,12 @@ public class CustomerListDataAccessService implements CustomerDAO{
     @Override
     public void updateCustomer(Customer customer) {
         customers.add(customer);
+    }
+
+    @Override
+    public Optional<Customer> selectUserByEmail(String email) {
+        return customers.stream()
+                .filter(c -> c.getUsername().equals(email))
+                .findFirst();
     }
 }
