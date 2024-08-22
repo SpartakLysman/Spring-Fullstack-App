@@ -1,25 +1,23 @@
 import {
-    Heading,
+    AlertDialog,
+    AlertDialogBody, AlertDialogContent,
+    AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay,
     Avatar,
     Box,
+    Button,
     Center,
-    Image,
     Flex,
-    Text,
+    Heading,
+    Image,
     Stack,
     Tag,
-    useColorModeValue,
-    Button,
-    useDisclosure,
-    AlertDialogFooter,
-    AlertDialog,
-    AlertDialogOverlay,
-    AlertDialogContent,
-    AlertDialogHeader, AlertDialogBody,
+    Text,
+    useColorModeValue, useDisclosure,
 } from '@chakra-ui/react';
-import {useRef} from "react";
-import {deleteCustomer} from "../services/client.js";
-import {errorNotification, successNotification} from "../services/notification.js";
+
+import {useRef} from 'react'
+import {deleteCustomer} from "../../services/client.js";
+import {errorNotification, successNotification} from "../../services/notification.js";
 import UpdateCustomerDrawer from "./UpdateCustomerDrawer.jsx";
 
 export default function CardWithImage({id, name, email, age, gender, imageNumber, fetchCustomers}) {
@@ -88,7 +86,7 @@ export default function CardWithImage({id, name, email, age, gender, imageNumber
                                 boxShadow: 'lg'
                             }}
                             _focus={{
-                                bg: 'grey.500'
+                                bg: 'green.500'
                             }}
                             onClick={onOpen}
                         >
@@ -139,6 +137,7 @@ export default function CardWithImage({id, name, email, age, gender, imageNumber
                             </AlertDialogOverlay>
                         </AlertDialog>
                     </Stack>
+
                 </Stack>
             </Box>
         </Center>
