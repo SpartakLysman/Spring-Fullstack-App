@@ -25,23 +25,18 @@ import {
 import {
     FiBell,
     FiChevronDown,
-    FiCompass,
     FiHome,
     FiMenu,
     FiSettings,
-    FiStar,
-    FiTrendingUp,
-    FiPhone
+    FiPhone, FiUsers
 } from 'react-icons/fi';
 import {useAuth} from "../context/AuthContext.jsx";
 
 const LinkItems = [
-    {name: 'Home', icon: FiHome},
-    {name: 'Contact', icon: FiPhone},
-    {name: 'Trending', icon: FiTrendingUp},
-    {name: 'Explore', icon: FiCompass},
-    {name: 'Favourites', icon: FiStar},
-    {name: 'Settings', icon: FiSettings},
+    {name: 'Home', route: '/dashboard', icon: FiHome},
+    {name: 'Customers', route: '/dashboard/customers', icon: FiUsers},
+    {name: 'Contact', route: '/dashboard/contacts', icon: FiPhone},
+    {name: 'Settings', route: '/dashboard/settings', icon: FiSettings},
 ];
 
 export default function SidebarWithHeader({children}) {
@@ -100,6 +95,7 @@ const SidebarContent = ({onClose, ...rest}) => {
             {LinkItems.map((link) => (
                 <NavItem
                     key={link.name}
+                    route={link.route}
                     icon={link.icon}
                     onClick={link.name === 'Home' ? () => window.location.reload() : undefined}
                 >
@@ -110,9 +106,9 @@ const SidebarContent = ({onClose, ...rest}) => {
     );
 };
 
-const NavItem = ({icon, children, ...rest}) => {
+const NavItem = ({icon, route, children, ...rest}) => {
     return (
-        // <Link href="frontend/react/src/components/shared#" style={{textDecoration: 'none'}} _focus={{boxShadow: 'none'}}>
+         <Link href={route} style={{textDecoration: 'none'}} _focus={{boxShadow: 'none'}}>
         <Flex
             align="center"
             p="4"
@@ -137,7 +133,7 @@ const NavItem = ({icon, children, ...rest}) => {
             )}
             {children}
         </Flex>
-        // </Link>
+         </Link>
     );
 };
 
