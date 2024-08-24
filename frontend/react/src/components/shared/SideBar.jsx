@@ -35,14 +35,14 @@ import {useAuth} from "../context/AuthContext.jsx";
 const LinkItems = [
     {name: 'Home', route: '/homepage', icon: FiHome},
     {name: 'Customers', route: '/homepage/customers', icon: FiUsers},
-    {name: 'Contact', route: '/homepage/contacts', icon: FiPhone},
+    {name: 'Contact', route: '/homepage/contact', icon: FiPhone},
     {name: 'Settings', route: '/homepage/settings', icon: FiSettings},
 ];
 
 export default function SidebarWithHeader({children}) {
     const {isOpen, onOpen, onClose} = useDisclosure();
     return (
-        <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
+        <Box bg={useColorModeValue('mediumturquoise', 'gray.900')}>
             <SidebarContent
                 onClose={() => onClose}
                 display={{base: 'none', md: 'block'}}
@@ -61,7 +61,7 @@ export default function SidebarWithHeader({children}) {
             </Drawer>
             {/* mobilenav */}
             <MobileNav onOpen={onOpen}/>
-            <Box ml={{base: 0, md: 60}} p="4">
+            <Box ml={{base: 0, md: 60}} >
                 {children}
             </Box>
         </Box>
@@ -79,24 +79,31 @@ const SidebarContent = ({onClose, ...rest}) => {
             pos="fixed"
             h="full"
             {...rest}>
-            <Flex h="20" flexDirection="column" alignItems="center" mx="8" mb={75} mt={2}
+            <Flex h="20" flexDirection="column" alignItems="center" mx="8" mb={120} mt={2}
                   justifyContent="space-between">
-                <Text fontSize="2xl" fontFamily="Gill Sans" fontWeight="bold" mb={4}>
-                    Home Page📄
+                <Text fontSize="2xl" fontFamily="Gill Sans" fontWeight="bold" mb={7}>
+                    Dashboard
                 </Text>
+
                 <Image
                     src='https://raw.githubusercontent.com/SpartakLysman/Spring-Fullstack-App/main/logo.png'
                     borderRadius='full'
-                    boxSize='100px'
+                    boxSize='120px'
                     alt='spartak logo'
+                    mb={8}
                 />
+                <Box h={8} />
+
                 <CloseButton display={{base: 'flex', md: 'none'}} onClick={onClose}/>
+
             </Flex>
-            {LinkItems.map((link) => (
+
+            {LinkItems.map((link, index) => (
                 <NavItem
                     key={link.name}
                     route={link.route}
                     icon={link.icon}
+                    mt={index === 0 ? 8 : 0}
                 >
                     {link.name}
                 </NavItem>

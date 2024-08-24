@@ -33,27 +33,27 @@ export default function CardWithImage({id, name, email, age, gender, imageNumber
                 minW={'300px'}
                 w={'full'}
                 m={2}
-                bg={useColorModeValue('white', 'gray.800')}
-                boxShadow={'lg'}
+                bg={useColorModeValue('darkslategray', 'gray.800')}
+                boxShadow="0 30px 60px rgba(0, 0, 0, 0.5), 0 15px 30px rgba(0, 0, 0, 0.5)"
                 rounded={'md'}
                 overflow={'hidden'}>
                 <Image
                     h={'120px'}
                     w={'full'}
                     src={
-                        'https://images.unsplash.com/photo-1612865547334-09cb8cb455da?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80'
+                            'https://raw.githubusercontent.com/SpartakLysman/Spring-Fullstack-App/main/palm_tree.png'
                     }
                     objectFit={'cover'}
                 />
                 <Flex justify={'center'} mt={-12}>
                     <Avatar
-                        size={'xl'}
+                        size={'4xl'}
                         src={
                             `https://randomuser.me/api/portraits/${randomUserGender}/${imageNumber}.jpg`
                         }
                         alt={'Author'}
                         css={{
-                            border: '2px solid white',
+                            border: '2px solid darkslategray',
                         }}
                     />
                 </Flex>
@@ -61,11 +61,11 @@ export default function CardWithImage({id, name, email, age, gender, imageNumber
                 <Box p={6}>
                     <Stack spacing={2} align={'center'} mb={5}>
                         <Tag borderRadius={"full"}>{id}</Tag>
-                        <Heading fontSize={'2xl'} fontWeight={500} fontFamily={'body'}>
+                        <Heading fontSize={'2xl'} fontWeight={700} fontFamily={'body'} color={'black'}>
                             {name}
                         </Heading>
-                        <Text color={'gray.500'}>{email}</Text>
-                        <Text color={'gray.500'}>Age {age} | {gender}</Text>
+                        <Text color={'gray.300'}>{email}</Text>
+                        <Text color={'gray.300'}>Age {age} | {gender}</Text>
                     </Stack>
                 </Box>
                 <Stack direction={'row'} justify={'center'} spacing={6} p={4}>
@@ -78,7 +78,7 @@ export default function CardWithImage({id, name, email, age, gender, imageNumber
                     </Stack>
                     <Stack>
                         <Button
-                            bg={'red.400'}
+                            bg={'red.500'}
                             color={'white'}
                             rounded={'full'}
                             _hover={{
@@ -86,7 +86,7 @@ export default function CardWithImage({id, name, email, age, gender, imageNumber
                                 boxShadow: 'lg'
                             }}
                             _focus={{
-                                bg: 'green.500'
+                                bg: 'red.500'
                             }}
                             onClick={onOpen}
                         >

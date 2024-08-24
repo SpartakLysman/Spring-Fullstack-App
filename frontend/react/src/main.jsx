@@ -12,6 +12,7 @@ import './index.css'
 import Home from "./Home.jsx";
 import Contact from "./components/contacts/Contact.jsx";
 import Settings from "./components/settings/Settings.jsx";
+import HowItWorks from "./components/howItWorks/HowItWorks.jsx";
 
 const {ToastContainer} = createStandaloneToast();
 
@@ -33,12 +34,16 @@ const router = createBrowserRouter([
         element: <ProtectedRoute><Customer/></ProtectedRoute>
     },
     {
-        path: "homepage/contacts",
+        path: "homepage/contact",
         element: <ProtectedRoute><Contact/></ProtectedRoute>
     },
     {
         path: "homepage/settings",
         element: <ProtectedRoute><Settings/></ProtectedRoute>
+    },
+    {
+        path: "homepage/howitworks",
+        element: <ProtectedRoute><HowItWorks/></ProtectedRoute>
     }
 ])
 
