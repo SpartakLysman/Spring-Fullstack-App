@@ -33,10 +33,10 @@ import {
 import {useAuth} from "../context/AuthContext.jsx";
 
 const LinkItems = [
-    {name: 'Home', route: '/dashboard', icon: FiHome},
-    {name: 'Customers', route: '/dashboard/customers', icon: FiUsers},
-    {name: 'Contact', route: '/dashboard/contacts', icon: FiPhone},
-    {name: 'Settings', route: '/dashboard/settings', icon: FiSettings},
+    {name: 'Home', route: '/homepage', icon: FiHome},
+    {name: 'Customers', route: '/homepage/customers', icon: FiUsers},
+    {name: 'Contact', route: '/homepage/contacts', icon: FiPhone},
+    {name: 'Settings', route: '/homepage/settings', icon: FiSettings},
 ];
 
 export default function SidebarWithHeader({children}) {
@@ -97,7 +97,6 @@ const SidebarContent = ({onClose, ...rest}) => {
                     key={link.name}
                     route={link.route}
                     icon={link.icon}
-                    onClick={link.name === 'Home' ? () => window.location.reload() : undefined}
                 >
                     {link.name}
                 </NavItem>
