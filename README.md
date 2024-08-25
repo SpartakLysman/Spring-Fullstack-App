@@ -1,9 +1,11 @@
 ### 📌 FULL-STACK APPLICATION
+<br/><br/>
 
-![Curriculum]()
+![Curriculum](https://raw.githubusercontent.com/SpartakLysman/Spring-Fullstack-App/main/readme_image.png)
 
+<br/>
 
-Over the next three months you will learn how to craft stunning, responsive front-end interfaces that flawlessly communicate with robust, scalable back-end servers, all with the use of industry-standard technologies such as:
+<h4>Stunning, responsive front-end interface that flawlessly communicate with robust, scalable back-end server, all with the use of industry-standard technologies such as: </h4>
 
 - ✅ Spring Boot 3
 - ✅ HTTP & API development
