@@ -1,6 +1,6 @@
 ### 📌 FULL-STACK APPLICATION
 
-![Curriculum](https://user-images.githubusercontent.com/40702606/228275106-73076517-ff4f-40e0-a993-4d05d5a2ea77.png)
+![Curriculum]()
 
 
 Over the next three months you will learn how to craft stunning, responsive front-end interfaces that flawlessly communicate with robust, scalable back-end servers, all with the use of industry-standard technologies such as:
