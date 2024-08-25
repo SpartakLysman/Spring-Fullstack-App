@@ -31,8 +31,14 @@ build/
 
 ### VS Code ###
 .vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+.history/*
 
 ### JAVA SCRIPT
+
+
 # Logs
 logs
 *.log
@@ -50,10 +56,25 @@ dist-ssr
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
-.idea
 .DS_Store
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+
+**/target/
+**/.idea/
+**/node_modules/
+**/.DS_Store
+**/*.iml
+
+# Angular
+**/.angular/cache
+.sass-cache/
+connect.lock
+coverage
+libpeerconnection.log
+testem.log
+typings
+

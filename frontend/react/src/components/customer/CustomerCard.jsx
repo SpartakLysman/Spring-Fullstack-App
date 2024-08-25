@@ -53,7 +53,7 @@ export default function CardWithImage({id, name, email, age, gender, imageNumber
                         }
                         alt={'Author'}
                         css={{
-                            border: '2px solid darkslategray',
+                            border: '3px solid black',
                         }}
                     />
                 </Flex>
