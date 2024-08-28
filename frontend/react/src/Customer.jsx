@@ -17,8 +17,9 @@ import { getCustomers } from "./services/client.js";
 import CardWithImage from "./components/customer/CustomerCard.jsx";
 import CreateCustomerDrawer from "./components/customer/CreateCustomerDrawer.jsx";
 import { errorNotification } from "./services/notification.js";
-import { ArrowUpDownIcon, ChevronDownIcon, SearchIcon } from "@chakra-ui/icons";
+import { ChevronDownIcon } from "@chakra-ui/icons";
 import SearchFormButton from "./SearchFormButton.jsx";
+import { SortCriteria, SortDirection } from "./enums/SortEnums.js"
 
 const Customer = () => {
     const [customers, setCustomers] = useState([]);
@@ -26,14 +27,9 @@ const Customer = () => {
     const [err, setError] = useState("");
     const [customerCount, setCustomerCount] = useState(0);
 
-    const handleSort = (criteria) => {
-        console.log(`Sorting by ${criteria}`);
-        // Implement your sorting logic here, or call fetchCustomers with the criteria
-    };
-
-    const fetchCustomers = () => {
+    const fetchCustomers = (sortBy = SortCriteria.ID, sortDirection = SortDirection.ASC) => {
         setLoading(true);
-        getCustomers()
+        getCustomers(sortBy, sortDirection)
             .then(res => {
                 setCustomers(res.data);
                 setCustomerCount(res.data.length);
@@ -48,6 +44,10 @@ const Customer = () => {
             .finally(() => {
                 setLoading(false);
             });
+    };
+
+    const handleSort = (criteria, direction) => {
+        fetchCustomers(criteria, direction);
     };
 
     useEffect(() => {
@@ -71,9 +71,7 @@ const Customer = () => {
     if (err) {
         return (
             <SidebarWithHeader>
-                <CreateCustomerDrawer
-                    fetchCustomers={fetchCustomers}
-                />
+                <CreateCustomerDrawer fetchCustomers={fetchCustomers} />
                 <Text mt={5}>Ooops there was an error</Text>
             </SidebarWithHeader>
         );
@@ -82,9 +80,7 @@ const Customer = () => {
     if (customers.length <= 0) {
         return (
             <SidebarWithHeader>
-                <CreateCustomerDrawer
-                    fetchCustomers={fetchCustomers}
-                />
+                <CreateCustomerDrawer fetchCustomers={fetchCustomers} />
                 <Text mt={5}>No customers available</Text>
             </SidebarWithHeader>
         );
@@ -92,8 +88,6 @@ const Customer = () => {
 
     return (
         <SidebarWithHeader>
-
-
             <Box position="relative" mb={2}>
                 <Text
                     fontSize="lg"
@@ -113,14 +107,9 @@ const Customer = () => {
                 </Text>
             </Box>
 
-
-            <CreateCustomerDrawer
-                fetchCustomers={fetchCustomers}
-            />
+            <CreateCustomerDrawer fetchCustomers={fetchCustomers} />
             <SortButton onSort={handleSort} />
-
             <SearchFormButton />
-
 
             <Wrap justify={"center"} spacing={"30px"}>
                 {customers.map((customer, index) => (
@@ -144,38 +133,28 @@ function SortButton({ onSort }) {
                 as={Button}
                 rightIcon={<ChevronDownIcon />}
                 colorScheme="blue"
-                position="relative" // Changed to 'relative' for better positioning
+                position="relative"
                 top="3"
                 left="80.3%"
             >
                 Sort by
             </MenuButton>
-            <MenuList
-                bg="gray.200"
-                color="black"
-                sx={{
-                    '& .chakra-menu__menuitem': {
-                        bg: 'gray.200',
-                        _hover: { bg: 'gray.300' },
-                        _focus: { bg: 'gray.300' },
-                    },
-                }}
-            >
-                <MenuItem onClick={() => onSort("id_lowest")}>Id: lowest</MenuItem>
+            <MenuList bg="gray.200" color="black">
+                <MenuItem onClick={() => onSort(SortCriteria.ID, SortDirection.ASC)}>Id: Lowest</MenuItem>
                 <Divider my="0" borderColor="gray.300" />
-                <MenuItem onClick={() => onSort("id_highest")}>Id: highest</MenuItem>
+                <MenuItem onClick={() => onSort(SortCriteria.ID, SortDirection.DESC)}>Id: Highest</MenuItem>
                 <Divider my="0" borderColor="gray.300" />
-                <MenuItem onClick={() => onSort("age_lowest")}>Age: lowest</MenuItem>
+                <MenuItem onClick={() => onSort(SortCriteria.AGE, SortDirection.ASC)}>Age: Lowest</MenuItem>
                 <Divider my="0" borderColor="gray.300" />
-                <MenuItem onClick={() => onSort("age_highest")}>Age: highest</MenuItem>
+                <MenuItem onClick={() => onSort(SortCriteria.AGE, SortDirection.DESC)}>Age: Highest</MenuItem>
                 <Divider my="0" borderColor="gray.300" />
-                <MenuItem onClick={() => onSort("gender_male_first")}>Gender: male first</MenuItem>
+                <MenuItem onClick={() => onSort(SortCriteria.GENDER, SortDirection.DESC)}>Gender: Male First</MenuItem>
                 <Divider my="0" borderColor="gray.300" />
-                <MenuItem onClick={() => onSort("gender_female_first")}>Gender: female first</MenuItem>
+                <MenuItem onClick={() => onSort(SortCriteria.GENDER, SortDirection.ASC)}>Gender: Female First</MenuItem>
                 <Divider my="0" borderColor="gray.300" />
-                <MenuItem onClick={() => onSort("image_with")}>Image: with image</MenuItem>
+                <MenuItem onClick={() => onSort(SortCriteria.IMAGE, SortDirection.ASC)}>Image: With Image</MenuItem>
                 <Divider my="0" borderColor="gray.300" />
-                <MenuItem onClick={() => onSort("image_no")}>Image: no image</MenuItem>
+                <MenuItem onClick={() => onSort(SortCriteria.IMAGE, SortDirection.DESC)}>Image: No Image</MenuItem>
             </MenuList>
         </Menu>
     );

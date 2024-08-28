@@ -6,16 +6,17 @@ const getAuthConfig = () => ({
     }
 })
 
-export const getCustomers = async () => {
+
+export const getCustomers = async (sortBy = "ID", sortDirection = "ASC") => {
     try {
         return await axios.get(
-            `${import.meta.env.VITE_API_BASE_URL}/api/v1/customers`,
+            `${import.meta.env.VITE_API_BASE_URL}/api/v1/customers?sortBy=${sortBy}&sortDirection=${sortDirection}`,
             getAuthConfig()
-        )
+        );
     } catch (e) {
         throw e;
     }
-}
+};
 
 export const saveCustomer = async (customer) => {
     try {
@@ -80,4 +81,18 @@ export const uploadCustomerProfilePicture = async (id, formData) => {
 export const customerProfilePictureUrl = (id) =>
     `${import.meta.env.VITE_API_BASE_URL}/api/v1/customers/${id}/profile-image`;
 
-
+export const searchCustomersByParameter = async (searchBy, query) => {
+    try {
+        const response = await axios.get(
+            `${import.meta.env.VITE_API_BASE_URL}/api/v1/customers/search`,
+            {
+                params: { searchBy, query },
+                ...getAuthConfig(),
+            }
+        );
+        return response.data;
+    } catch (e) {
+        console.error(`Failed to search customers by ${searchBy}:`, e);
+        throw e;
+    }
+};

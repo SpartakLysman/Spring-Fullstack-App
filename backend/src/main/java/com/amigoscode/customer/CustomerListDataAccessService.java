@@ -33,6 +33,11 @@ public class CustomerListDataAccessService implements CustomerDAO {
     }
 
     @Override
+    public List<Customer> selectAllCustomers(SortCriteria sortBy, SortDirection sortDirection) {
+        return null;
+    }
+
+    @Override
     public List<Customer> selectAllCustomers() {
         return customers;
     }
@@ -41,6 +46,28 @@ public class CustomerListDataAccessService implements CustomerDAO {
     public Optional<Customer> selectCustomerById(Long id) {
         return customers.stream()
                 .filter(c -> c.getId().equals(id))
+                .findFirst();
+    }
+
+    @Override
+    public List<Customer> findCustomersByName(String name) {
+        return null;
+    }
+
+    @Override
+    public List<Customer> findCustomersByAge(Long age) {
+        return null;
+    }
+
+    @Override
+    public List<Customer> findCustomersByEmail(String email) {
+        return null;
+    }
+
+    @Override
+    public Optional<Customer> selectUserByEmail(String email) {
+        return customers.stream()
+                .filter(c -> c.getUsername().equals(email))
                 .findFirst();
     }
 
@@ -68,13 +95,6 @@ public class CustomerListDataAccessService implements CustomerDAO {
     @Override
     public void updateCustomer(Customer customer) {
         customers.add(customer);
-    }
-
-    @Override
-    public Optional<Customer> selectUserByEmail(String email) {
-        return customers.stream()
-                .filter(c -> c.getUsername().equals(email))
-                .findFirst();
     }
 
     @Override

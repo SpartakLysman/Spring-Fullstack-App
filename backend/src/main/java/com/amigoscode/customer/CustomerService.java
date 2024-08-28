@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -140,5 +141,32 @@ public class CustomerService {
                 "profile_images/%s/%s".formatted(customerId, customer.profileImageId()));
 
         return profileImage;
+    }
+
+    public List<CustomerDTO> getSortedCustomers(SortCriteria sortBy, SortDirection sortDirection) {
+        return customerDAO.selectAllCustomers(sortBy, sortDirection)
+                .stream()
+                .map(customerDTOMapper)
+                .collect(Collectors.toList());
+    }
+
+    public List<CustomerDTO> searchCustomers(String query, String searchBy) {
+        List<Customer> customers;
+        switch (searchBy.toLowerCase()) {
+            case "name":
+                customers = customerDAO.findCustomersByName(query);
+                break;
+            case "age":
+                customers = customerDAO.findCustomersByAge(Long.parseLong(query));
+                break;
+            case "email":
+                customers = customerDAO.findCustomersByEmail(query);
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid search criteria: " + searchBy);
+        }
+        return customers.stream()
+                .map(customerDTOMapper)
+                .collect(Collectors.toList());
     }
 }

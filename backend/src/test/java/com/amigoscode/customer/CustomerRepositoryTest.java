@@ -111,4 +111,17 @@ class CustomerRepositoryTest extends AbstractTestcontainers {
         assertThat(customerOptional).isPresent().hasValueSatisfying(
                 c -> assertThat(c.getProfileImageId()).isEqualTo("2222"));
     }
+
+    @Test
+    void findCustomerByName() {
+    }
+    @Test
+    void findCustomerByAge() {
+    }
+    @Test
+    void findCustomerByEmail() {
+    }
+
+
+
 }

@@ -40,6 +40,17 @@ public class CustomerJDBCDataAccessService implements CustomerDAO {
     }
 
     @Override
+    public Optional<Customer> selectUserByEmail(String email) {
+        var sql = """
+                SELECT id, name, email, password, age, gender, profile_image_id
+                FROM customer
+                WHERE email = ?
+                """;
+
+        return jdbcTemplate.query(sql, customerRowMapper, email).stream().findFirst();
+    }
+
+    @Override
     public void insertCustomer(Customer customer) {
         var sql = """
                 INSERT INTO customer(name, email, password, age, gender)
@@ -115,17 +126,6 @@ public class CustomerJDBCDataAccessService implements CustomerDAO {
     }
 
     @Override
-    public Optional<Customer> selectUserByEmail(String email) {
-        var sql = """
-                SELECT id, name, email, password, age, gender, profile_image_id
-                FROM customer
-                WHERE email = ?
-                """;
-
-        return jdbcTemplate.query(sql, customerRowMapper, email).stream().findFirst();
-    }
-
-    @Override
     public void updateCustomerProfileImageId(String profileImageId, Long customerId) {
         var sql = """
                 UPDATE customer
@@ -133,5 +133,66 @@ public class CustomerJDBCDataAccessService implements CustomerDAO {
                 WHERE id = ?
                 """;
         jdbcTemplate.update(sql, profileImageId, customerId);
+    }
+
+    @Override
+    public List<Customer> selectAllCustomers(SortCriteria sortBy, SortDirection sortDirection) {
+        String sql;
+
+        if (sortBy == SortCriteria.IMAGE) {
+            // Sorting by image: 'profile_image_id IS NOT NULL' comes first if ASC, else last if DESC
+            sql = """
+                    SELECT id, name, email, password, age, gender, profile_image_id
+                    FROM customer
+                    ORDER BY CASE 
+                                WHEN profile_image_id IS NOT NULL THEN 0 
+                                ELSE 1 
+                            END %s
+                    LIMIT 1000
+                    """.formatted(sortDirection.getDirection());
+        } else {
+            // Sorting by other criteria
+            sql = """
+                    SELECT id, name, email, password, age, gender, profile_image_id
+                    FROM customer
+                    ORDER BY %s %s
+                    LIMIT 1000
+                    """.formatted(sortBy.getFieldName(), sortDirection.getDirection());
+        }
+
+        return jdbcTemplate.query(sql, customerRowMapper);
+    }
+
+    @Override
+    public List<Customer> findCustomersByName(String name) {
+        var sql = """
+                SELECT id, name, email, password, age, gender, profile_image_id
+                FROM customer
+                WHERE name LIKE ?
+                """;
+
+        return jdbcTemplate.query(sql, customerRowMapper, "%" + name + "%");
+    }
+
+    @Override
+    public List<Customer> findCustomersByAge(Long age) {
+        var sql = """
+                SELECT id, name, email, password, age, gender, profile_image_id
+                FROM customer
+                WHERE age = ?
+                """;
+
+        return jdbcTemplate.query(sql, customerRowMapper, age);
+    }
+
+    @Override
+    public List<Customer> findCustomersByEmail(String email) {
+        var sql = """
+                SELECT id, name, email, password, age, gender, profile_image_id
+                FROM customer
+                WHERE email LIKE ?
+                """;
+
+        return jdbcTemplate.query(sql, customerRowMapper, "%" + email + "%");
     }
 }

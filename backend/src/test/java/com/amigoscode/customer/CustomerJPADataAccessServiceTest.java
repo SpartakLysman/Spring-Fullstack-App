@@ -115,4 +115,14 @@ class CustomerJPADataAccessServiceTest {
 
         verify(customerRepository).updateProfileImageId(profileImageId, customerId);
     }
+
+    @Test
+    void findCustomerByEmail() {
+    }
+    @Test
+    void findCustomerByName() {
+    }
+    @Test
+    void findCustomerByAge() {
+    }
 }

@@ -1,6 +1,7 @@
 package com.amigoscode.customer;
 
 import org.springframework.data.domain.Page;
+
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
@@ -17,6 +18,11 @@ public class CustomerJPADataAccessService implements CustomerDAO {
     }
 
     @Override
+    public List<Customer> selectAllCustomers(SortCriteria sortBy, SortDirection sortDirection) {
+        return null;
+    }
+
+    @Override
     public List<Customer> selectAllCustomers() {
         Page<Customer> page = customerRepository.findAll(Pageable.ofSize(1000));
         return page.getContent();
@@ -28,8 +34,28 @@ public class CustomerJPADataAccessService implements CustomerDAO {
     }
 
     @Override
+    public List<Customer> findCustomersByName(String name) {
+        return null;
+    }
+
+    @Override
+    public List<Customer> findCustomersByAge(Long age) {
+        return null;
+    }
+
+    @Override
+    public List<Customer> findCustomersByEmail(String email) {
+        return null;
+    }
+
+    @Override
     public void insertCustomer(Customer customer) {
         customerRepository.save(customer);
+    }
+
+    @Override
+    public Optional<Customer> selectUserByEmail(String email) {
+        return customerRepository.findCustomerByEmail(email);
     }
 
     @Override
@@ -50,11 +76,6 @@ public class CustomerJPADataAccessService implements CustomerDAO {
     @Override
     public void updateCustomer(Customer update) {
         customerRepository.save(update);
-    }
-
-    @Override
-    public Optional<Customer> selectUserByEmail(String email) {
-        return customerRepository.findCustomerByEmail(email);
     }
 
     @Override

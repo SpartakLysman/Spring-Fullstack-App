@@ -54,6 +54,6 @@ spring:
         smtp:
           auth: true
           starttls:
-            enable: true
+            enable: false
 #server:
 #  port: 8080 #if port: '80' then we can omit port specifying when sending a request. 8080 - localhost:8080/... . or 80 - localhost/... .

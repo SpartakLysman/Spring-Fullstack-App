@@ -12,12 +12,14 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -410,6 +412,73 @@ class CustomerServiceTest {
         verifyNoInteractions(s3Service);
     }
 
+    @Test
+    void getSortedCustomersByIdAsc() {
+        List<Customer> customers = Arrays.asList(
+                new Customer(1L, "John", "john@example.com", "password", 25, Gender.MALE, "image1"),
+                new Customer(2L, "Jane", "jane@example.com", "password", 30, Gender.FEMALE, null)
+        );
+
+        List<CustomerDTO> expectedDTOs = customers.stream()
+                .map(customerDTOMapper)
+                .collect(Collectors.toList());
+
+        when(customerDAO.selectAllCustomers(SortCriteria.ID, SortDirection.ASC)).thenReturn(customers);
+
+        List<CustomerDTO> result = underTest.getSortedCustomers(SortCriteria.ID, SortDirection.ASC);
+
+        assertThat(result).isEqualTo(expectedDTOs);
+    }
+
+    @Test
+    void getSortedCustomersByAgeDesc() {
+        // Define test data
+        List<Customer> customers = Arrays.asList(
+                new Customer(1L, "John", "john@example.com", "password", 25, Gender.MALE, "image1"),
+                new Customer(2L, "Jane", "jane@example.com", "password", 30, Gender.FEMALE, null)
+        );
+
+        List<CustomerDTO> expectedDTOs = customers.stream()
+                .map(customerDTOMapper)
+                .collect(Collectors.toList());
+
+        when(customerDAO.selectAllCustomers(SortCriteria.AGE, SortDirection.DESC)).thenReturn(customers);
+
+        List<CustomerDTO> result = underTest.getSortedCustomers(SortCriteria.AGE, SortDirection.DESC);
+
+        assertThat(result).isEqualTo(expectedDTOs);
+    }
+
+    @Test
+    void getSortedCustomersByImageAsc() {
+        List<Customer> customers = Arrays.asList(
+                new Customer(1L, "John", "john@example.com", "password", 25, Gender.MALE, null),
+                new Customer(2L, "Jane", "jane@example.com", "password", 30, Gender.FEMALE, "image1")
+        );
+
+        List<CustomerDTO> expectedDTOs = customers.stream()
+                .map(customerDTOMapper)
+                .collect(Collectors.toList());
+
+        when(customerDAO.selectAllCustomers(SortCriteria.IMAGE, SortDirection.ASC)).thenReturn(customers);
+
+        List<CustomerDTO> result = underTest.getSortedCustomers(SortCriteria.IMAGE, SortDirection.ASC);
+
+        assertThat(result).isEqualTo(expectedDTOs);
+    }
+
+
+
+
+    @Test
+    void findCustomerByEmail() {
+    }
+    @Test
+    void findCustomerByName() {
+    }
+    @Test
+    void findCustomerByAge() {
+    }
 }
 
 

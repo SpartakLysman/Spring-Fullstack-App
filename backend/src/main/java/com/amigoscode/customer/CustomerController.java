@@ -1,6 +1,7 @@
 package com.amigoscode.customer;
 
 import com.amigoscode.jwt.JWTUtil;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,13 +22,11 @@ public class CustomerController {
         this.jwtUtil = jwtUtil;
     }
 
-    /*
-    @RequestMapping(path = "api/v1/customer",
-                    method = RequestMethod.GET
-    )*/
     @GetMapping
-    public List<CustomerDTO> getCustomers() {
-        return customerService.getAllCustomers();
+    public List<CustomerDTO> getCustomers(
+            @RequestParam(defaultValue = "ID") SortCriteria sortBy,
+            @RequestParam(defaultValue = "ASC") SortDirection sortDirection) {
+        return customerService.getSortedCustomers(sortBy, sortDirection);
     }
 
     @GetMapping("{customerId}")
@@ -69,5 +68,10 @@ public class CustomerController {
             produces = MediaType.IMAGE_JPEG_VALUE)
     public byte[] getCustomerImagePicture(@PathVariable("customerId") Long customerId) {
         return customerService.getCustomerProfileImage(customerId);
+    }
+
+    @GetMapping("/search")
+    public List<CustomerDTO> searchCustomers(@RequestParam String query, @RequestParam String searchBy) {
+        return customerService.searchCustomers(query, searchBy);
     }
 }
