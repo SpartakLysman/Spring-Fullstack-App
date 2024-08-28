@@ -17,16 +17,18 @@ import { CheckCircleIcon } from '@chakra-ui/icons'
 import SidebarWithHeader from "../shared/SideBar.jsx";
 
 const customFeaturesData = [
-    { title: 'Spring Boot', text: 'Description for Feature 1.' },
-    { title: 'Docker', text: 'Description for Feature 2.' },
-    { title: 'AWS', text: 'Description for Feature 3.' },
-    { title: 'React', text: 'Description for Feature 4.' },
-    { title: 'Chakra UI', text: 'Description for Feature 5.' },
-    { title: 'JWT', text: 'Description for Feature 6.' },
-    { title: 'Angular', text: 'Description for Feature 7.' },
-    { title: 'Flyway', text: 'Description for Feature 8.' },
-    { title: 'Flyway', text: 'Description for Feature 9.' },
-    { title: 'Flyway', text: 'Description for Feature 10.' },
+    { title: 'Spring Boot', text: 'As a main framework.' },
+    { title: 'PostgreSQL', text: 'Database to store all information about the user.' },
+    { title: 'Spring Data JPA', text: 'Simplifies database access and CRUD operations.' },
+    { title: 'Flyway', text: 'Flyway for seamless database migrations.' },
+    { title: 'JDBC', text: 'For efficient database communication.' },
+    { title: 'Docker', text: 'For containerization and deployment.' },
+    { title: 'AWS', text: 'For cloud-based hosting and scaling.' },
+    { title: 'JavaScript & React', text: 'For front-end development.' },
+    { title: 'Spring Security 6', text: 'For secure, authenticated applications.' },
+    { title: 'TypeScript', text: 'For type-safe, scalable code.' },
+    { title: 'Angular', text: 'For powerful, responsive front-end interfaces.' },
+    { title: 'Chakra UI', text: 'Used as a main components/templates provider for frontend.' },
 ];
 
 const HowItWorks = () => {
@@ -42,20 +44,20 @@ const HowItWorks = () => {
 
                 <Card m={50} bg="darkslategray" boxShadow="0 30px 60px rgba(0, 0, 0, 0.5), 0 15px 30px rgba(0, 0, 0, 0.5)" >
                     <CardBody >
-            <Box p={10} w="1300px" h="830px" color={'black'}>
-                <Stack spacing={5} as={Container} maxW={'3xl'} alignItems={'center'} textAlign={'center'} >
+            <Box p={6} w="1300px" h="900px" color={'black'}>
+                <Stack spacing={5} as={Container} maxW={'4xl'} alignItems={'center'} textAlign={'center'} >
                     <Heading fontSize={'4xl'} color={'black'}>How does it works?</Heading>
                     <Text color={'gray.300'} fontSize={'xl'}>
-                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
-                        tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+                        Stunning, responsive front-end interface that flawlessly communicate with robust,
+                        scalable back-end server, all with the use of industry-standard technologies such as:
                     </Text>
                 </Stack>
 
-                <Container maxW={'6xl'} mt={20}>
-                    <SimpleGrid columns={{ base: 1, md: 4, lg: 2 }} spacing={20} paddingLeft={70}>
+                <Container maxW={'5xl'} mt={20}>
+                    <SimpleGrid columns={{ base: 1, md: 4, lg: 2 }} spacing={58} paddingLeft={45}>
                         {customFeaturesData.map((feature) => (
                             <HStack key={feature.id} marginY={-4}>
-                                <Box color={'green.400'} px={8}>
+                                <Box color={'green.400'} px={5}>
                                     <Icon as={CheckCircleIcon} w="24px" h="24px"/>
                                 </Box>
                                 <VStack align={'start'}>

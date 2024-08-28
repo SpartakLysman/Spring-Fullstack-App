@@ -3,10 +3,16 @@ package com.amigoscode.customer;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import static org.mockito.Mockito.verify;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 
 class CustomerJPADataAccessServiceTest {
 
@@ -30,9 +36,18 @@ class CustomerJPADataAccessServiceTest {
 
     @Test
     void selectAllCustomers() {
-        underTest.selectAllCustomers();
+        Page<Customer> page = mock(Page.class);
+        List<Customer> customers = List.of(new Customer());
+        when(page.getContent()).thenReturn(customers);
+        when(customerRepository.findAll(any(Pageable.class))).thenReturn(page);
+        // When
+        List<Customer> expected = underTest.selectAllCustomers();
 
-        verify(customerRepository).findAll();
+        // Then
+        assertThat(expected).isEqualTo(customers);
+        ArgumentCaptor<Pageable> pageArgumentCaptor = ArgumentCaptor.forClass(Pageable.class);
+        verify(customerRepository).findAll(pageArgumentCaptor.capture());
+        assertThat(pageArgumentCaptor.getValue()).isEqualTo(Pageable.ofSize(1000));
     }
 
     @Test
@@ -89,5 +104,15 @@ class CustomerJPADataAccessServiceTest {
         underTest.updateCustomer(customer);
 
         verify(customerRepository).save(customer);
+    }
+
+    @Test
+    void canUpdateProfileImage() {
+        String profileImageId = "2222";
+        long customerId = 1;
+
+        underTest.updateCustomerProfileImageId(profileImageId, customerId);
+
+        verify(customerRepository).updateProfileImageId(profileImageId, customerId);
     }
 }

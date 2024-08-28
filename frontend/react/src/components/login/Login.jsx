@@ -59,7 +59,7 @@ const LoginForm = () => {
             onSubmit={(values, {setSubmitting}) => {
                 setSubmitting(true);
                 login(values).then(res => {
-                    navigate("/dashboard")
+                    navigate("/homepage")
                     console.log("Successfully logged in");
                 }).catch(err => {
                     errorNotification(

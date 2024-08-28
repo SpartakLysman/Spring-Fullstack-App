@@ -16,7 +16,7 @@ import {
 } from '@chakra-ui/react';
 
 import {useRef} from 'react'
-import {deleteCustomer} from "../../services/client.js";
+import {customerProfilePictureUrl, deleteCustomer} from "../../services/client.js";
 import {errorNotification, successNotification} from "../../services/notification.js";
 import UpdateCustomerDrawer from "./UpdateCustomerDrawer.jsx";
 
@@ -31,6 +31,8 @@ export default function CardWithImage({id, name, email, age, gender, imageNumber
             <Box
                 maxW={'300px'}
                 minW={'300px'}
+                minH={'500px'}
+                maxH={'500px'}
                 w={'full'}
                 m={2}
                 bg={useColorModeValue('darkslategray', 'gray.800')}
@@ -47,10 +49,8 @@ export default function CardWithImage({id, name, email, age, gender, imageNumber
                 />
                 <Flex justify={'center'} mt={-12}>
                     <Avatar
-                        size={'4xl'}
-                        src={
-                            `https://randomuser.me/api/portraits/${randomUserGender}/${imageNumber}.jpg`
-                        }
+                        size={'2xl'}
+                        src={customerProfilePictureUrl(id)}
                         alt={'Author'}
                         css={{
                             border: '3px solid black',
@@ -60,7 +60,7 @@ export default function CardWithImage({id, name, email, age, gender, imageNumber
 
                 <Box p={6}>
                     <Stack spacing={2} align={'center'} mb={5}>
-                        <Tag borderRadius={"full"}>{id}</Tag>
+                        <Tag borderRadius={"full"} boxShadow="0 30px 60px rgba(0, 0, 0, 0.3), 0 15px 30px rgba(0, 0, 0, 0.2)">{id}</Tag>
                         <Heading fontSize={'2xl'} fontWeight={700} fontFamily={'body'} color={'black'}>
                             {name}
                         </Heading>

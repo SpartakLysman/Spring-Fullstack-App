@@ -3,11 +3,19 @@ server:
   error:
     include-message: always
 
+
 cors:
   allowed-origins: "*"
   allowed-methods: "*"
   allowed-headers: "*"
   exposed-headers: "*"
+
+aws:
+  region: eu-west-1
+  s3:
+    mock: true
+    buckets:
+      customer: fs-spartak-customer-test
 
 management:
   endpoints:
@@ -30,8 +38,22 @@ spring:
     show-sql: false #none
   main:
     web-application-type: servlet
-
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  codec:
+    max-in-memory-size: 10MB
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${EMAIL_USERNAME}
+    password: ${EMAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 #server:
 #  port: 8080 #if port: '80' then we can omit port specifying when sending a request. 8080 - localhost:8080/... . or 80 - localhost/... .
-
-

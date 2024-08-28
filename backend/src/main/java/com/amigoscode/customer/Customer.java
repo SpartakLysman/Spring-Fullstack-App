@@ -10,8 +10,11 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "customer", uniqueConstraints =
-        {@UniqueConstraint(name = "customer_email_unique", columnNames = "email")})
+@Table(name = "customer", uniqueConstraints = {
+        @UniqueConstraint(name = "customer_email_unique", columnNames = "email"),
+        @UniqueConstraint(name = "profile_image_id_unique", columnNames = "profileImageId")
+}
+)
 public class Customer implements UserDetails {
 
     @Id
@@ -42,6 +45,9 @@ public class Customer implements UserDetails {
     @Column(nullable = false)
     private String password;
 
+    @Column(unique = true)
+    private String profileImageId;
+
     public Customer(Long id, String name, String email, String password, Integer age, Gender gender) {
         this.id = id;
         this.name = name;
@@ -49,6 +55,11 @@ public class Customer implements UserDetails {
         this.password = password;
         this.age = age;
         this.gender = gender;
+    }
+
+    public Customer(Long id, String name, String email, String password, Integer age, Gender gender, String profileImageId) {
+        this(id, name, email, password, age, gender);
+        this.profileImageId = profileImageId;
     }
 
     public Customer(String name, String email, String password, Integer age, Gender gender) {
@@ -108,28 +119,12 @@ public class Customer implements UserDetails {
         this.age = age;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Customer customer = (Customer) o;
-        return Objects.equals(getId(), customer.getId()) && Objects.equals(getName(), customer.getName()) && Objects.equals(getEmail(), customer.getEmail()) && Objects.equals(getAge(), customer.getAge()) && getGender() == customer.getGender();
+    public String getProfileImageId() {
+        return profileImageId;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getName(), getEmail(), getAge(), getGender());
-    }
-
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", age=" + age +
-                ", gender=" + gender +
-                '}';
+    public void setProfileImageId(String profileImageId) {
+        this.profileImageId = profileImageId;
     }
 
     @Override
@@ -165,5 +160,31 @@ public class Customer implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Customer customer = (Customer) o;
+        return Objects.equals(getId(), customer.getId()) && Objects.equals(getName(), customer.getName()) && Objects.equals(getEmail(), customer.getEmail()) && Objects.equals(getAge(), customer.getAge()) && getGender() == customer.getGender() && Objects.equals(getPassword(), customer.getPassword()) && Objects.equals(getProfileImageId(), customer.getProfileImageId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getEmail(), getAge(), getGender(), getPassword(), getProfileImageId());
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", age=" + age +
+                ", gender=" + gender +
+                ", password='" + password + '\'' +
+                ", profileImageId='" + profileImageId + '\'' +
+                '}';
     }
 }

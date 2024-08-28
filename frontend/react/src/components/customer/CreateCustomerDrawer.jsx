@@ -23,9 +23,12 @@ const CreateCustomerDrawer = ({ fetchCustomers }) => {
             onClick={onOpen}
             top="3"
             left="3.60%"
+            marginTop={3}
+            marginBottom={2}
         >
             Create customer
         </Button>
+
         <Drawer isOpen={isOpen} onClose={onClose} size={"xl"}>
             <DrawerOverlay/>
             <DrawerContent>

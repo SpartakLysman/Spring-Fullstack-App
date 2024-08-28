@@ -48,7 +48,8 @@ public class AuthenticationIT {
         Name fakerName = faker.name();
 
         String name = fakerName.fullName();
-        String email = fakerName.lastName() + "-" + UUID.randomUUID() + "@amigoscode.com";
+        String email = fakerName.lastName().toLowerCase() + "-" + UUID.randomUUID().toString().substring(0, 8) + "@amigoscode.com";
+
         int age = RANDOM.nextInt(1, 100);
 
         Gender gender = age % 2 == 0 ? Gender.MALE : Gender.FEMALE;
@@ -116,4 +117,3 @@ public class AuthenticationIT {
         assertThat(customerDTO.roles()).isEqualTo(List.of("ROLE_USER"));
     }
 }
-

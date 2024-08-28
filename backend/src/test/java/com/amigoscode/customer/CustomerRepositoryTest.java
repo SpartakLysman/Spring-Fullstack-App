@@ -10,12 +10,14 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Import;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE) // disabled the embedded database and witch to the container one
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+// disabled the embedded database and witch to the container one
 @Import({TestConfig.class})
 class CustomerRepositoryTest extends AbstractTestcontainers {
 
@@ -33,7 +35,7 @@ class CustomerRepositoryTest extends AbstractTestcontainers {
 
     @Test
     void existsCustomerByEmail() {
-        String email = FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID();
+        String email = FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID().toString().substring(0, 8);
         Customer customer = new Customer(
                 FAKER.name().fullName(),
                 email,
@@ -48,7 +50,7 @@ class CustomerRepositoryTest extends AbstractTestcontainers {
 
     @Test
     void existsCustomerByEmailFailsWhenEmailNotPresent() {
-        String email = FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID();
+        String email = FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID().toString().substring(0, 8);
 
         var actual = underTest.existsCustomerByEmail(email);
 
@@ -57,7 +59,7 @@ class CustomerRepositoryTest extends AbstractTestcontainers {
 
     @Test
     void existsCustomerById() {
-        String email = FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID();
+        String email = FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID().toString().substring(0, 8);
         Customer customer = new Customer(
                 FAKER.name().fullName(),
                 email,
@@ -84,5 +86,29 @@ class CustomerRepositoryTest extends AbstractTestcontainers {
         var actual = underTest.existsCustomerById(id);
 
         assertThat(actual).isFalse();
+    }
+
+    @Test
+    void canUpdateProfileImageId() {
+        String email = "email";
+        Customer customer = new Customer(
+                FAKER.name().fullName(),
+                email,
+                "password", 20,
+                Gender.MALE);
+        underTest.save(customer);
+
+        long id = underTest.findAll()
+                .stream()
+                .filter(c -> c.getEmail().equals(email))
+                .map(Customer::getId)
+                .findFirst()
+                .orElseThrow();
+
+       underTest.updateProfileImageId("2222", id);
+
+        Optional<Customer> customerOptional = underTest.findById(id);
+        assertThat(customerOptional).isPresent().hasValueSatisfying(
+                c -> assertThat(c.getProfileImageId()).isEqualTo("2222"));
     }
 }
