@@ -3,18 +3,14 @@ import * as Yup from 'yup';
 import {Alert, AlertIcon, Box, Button, FormLabel, Image, Input, Select, Stack, VStack} from "@chakra-ui/react";
 import {
     customerProfilePictureUrl,
-    saveCustomer,
     updateCustomer,
     uploadCustomerProfilePicture
 } from "../../services/client.js";
 import {successNotification, errorNotification} from "../../services/notification.js";
-import {Profiler, useCallback} from "react";
+import {useCallback} from "react";
 import {useDropzone} from "react-dropzone";
 
 const MyTextInput = ({label, ...props}) => {
-    // useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
-    // which we can spread on <input>. We can use field meta to show an error
-    // message if the field is invalid and it has been touched (i.e. visited)
     const [field, meta] = useField(props);
     return (
         <Box>
@@ -30,7 +26,7 @@ const MyTextInput = ({label, ...props}) => {
     );
 };
 
-const MyDropzone = ({ customerId, fetchCustomers }) => {
+const MyDropzone = ({customerId, fetchCustomers}) => {
     const onDrop = useCallback(acceptedFiles => {
         const formData = new FormData();
         formData.append("file", acceptedFiles[0])
@@ -67,7 +63,6 @@ const MyDropzone = ({ customerId, fetchCustomers }) => {
     )
 }
 
-// And now we can use these
 const UpdateCustomerForm = ({fetchCustomers, initialValues, customerId}) => {
     return (
         <>
@@ -112,8 +107,7 @@ const UpdateCustomerForm = ({fetchCustomers, initialValues, customerId}) => {
                     }).finally(() => {
                         setSubmitting(false);
                     })
-                }}
-            >
+                }}>
                 {({isValid, isSubmitting, dirty}) => (
                     <Form>
                         <Stack spacing={"24px"}>
@@ -123,21 +117,18 @@ const UpdateCustomerForm = ({fetchCustomers, initialValues, customerId}) => {
                                 type="text"
                                 placeholder="Jane"
                             />
-
                             <MyTextInput
                                 label="Email Address"
                                 name="email"
                                 type="email"
                                 placeholder="jane@formik.com"
                             />
-
                             <MyTextInput
                                 label="Age"
                                 name="age"
                                 type="number"
                                 placeholder="20"
                             />
-
                             <Button disabled={!(isValid && dirty) || isSubmitting} type="submit">Submit</Button>
                         </Stack>
                     </Form>

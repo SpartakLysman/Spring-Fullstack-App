@@ -5,7 +5,7 @@ import {Box, Flex, Heading, Image, Link, Stack, Text} from "@chakra-ui/react";
 import CreateCustomerForm from "../shared/CreateCustomerForm.jsx";
 
 const Signup = () => {
-    const {customer, setCustomerFromToken } = useAuth();
+    const {customer, setCustomerFromToken} = useAuth();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -41,7 +41,6 @@ const Signup = () => {
                 alignItems={"center"}
                 justifyContent={"center"}
             >
-
                 <Image
                     alt={'Login Image'}
                     objectFit={'fill'}
@@ -49,9 +48,7 @@ const Signup = () => {
                         'https://raw.githubusercontent.com/SpartakLysman/Spring-Fullstack-App/main/registration_image.png'
                     }
                     witdth={800}
-                    height={1350}
-
-                    // Adjust the size of the image
+                    height={1350} // Size of the image
                 />
                 <Box
                     position="absolute"

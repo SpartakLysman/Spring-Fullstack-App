@@ -14,7 +14,7 @@ public class ContactController {
     public String sendEmail(@RequestBody ContactForm contactForm) {
         String subject = "Message from " + contactForm.getName();
         String text = "Message: " + contactForm.getMessage() + "\n\nFrom: " + contactForm.getEmail();
-        emailService.sendSimpleMessage("spartaklysman@gmail.com", subject, text); 
+        emailService.sendSimpleMessage("spartaklysman@gmail.com", subject, text);
         return "Message sent successfully!";
     }
 }

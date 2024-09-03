@@ -59,9 +59,8 @@ export default function SidebarWithHeader({children}) {
                     <SidebarContent onClose={onClose}/>
                 </DrawerContent>
             </Drawer>
-            {/* mobilenav */}
             <MobileNav onOpen={onOpen}/>
-            <Box ml={{base: 0, md: 60}} >
+            <Box ml={{base: 0, md: 60}}>
                 {children}
             </Box>
         </Box>
@@ -84,7 +83,6 @@ const SidebarContent = ({onClose, ...rest}) => {
                 <Text fontSize="2xl" fontFamily="Gill Sans" fontWeight="bold" mb={7}>
                     Dashboard
                 </Text>
-
                 <Image
                     src='https://raw.githubusercontent.com/SpartakLysman/Spring-Fullstack-App/main/logo.png'
                     borderRadius='full'
@@ -92,12 +90,9 @@ const SidebarContent = ({onClose, ...rest}) => {
                     alt='spartak logo'
                     mb={8}
                 />
-                <Box h={8} />
-
+                <Box h={8}/>
                 <CloseButton display={{base: 'flex', md: 'none'}} onClick={onClose}/>
-
             </Flex>
-
             {LinkItems.map((link, index) => (
                 <NavItem
                     key={link.name}
@@ -114,37 +109,36 @@ const SidebarContent = ({onClose, ...rest}) => {
 
 const NavItem = ({icon, route, children, ...rest}) => {
     return (
-         <Link href={route} style={{textDecoration: 'none'}} _focus={{boxShadow: 'none'}}>
-        <Flex
-            align="center"
-            p="4"
-            mx="4"
-            borderRadius="lg"
-            role="group"
-            cursor="pointer"
-            _hover={{
-                bg: 'red.400',
-                color: 'white',
-            }}
-            {...rest}>
-            {icon && (
-                <Icon
-                    mr="4"
-                    fontSize="16"
-                    _groupHover={{
-                        color: 'white',
-                    }}
-                    as={icon}
-                />
-            )}
-            {children}
-        </Flex>
-         </Link>
+        <Link href={route} style={{textDecoration: 'none'}} _focus={{boxShadow: 'none'}}>
+            <Flex
+                align="center"
+                p="4"
+                mx="4"
+                borderRadius="lg"
+                role="group"
+                cursor="pointer"
+                _hover={{
+                    bg: 'red.400',
+                    color: 'white',
+                }}
+                {...rest}>
+                {icon && (
+                    <Icon
+                        mr="4"
+                        fontSize="16"
+                        _groupHover={{
+                            color: 'white',
+                        }}
+                        as={icon}
+                    />
+                )}
+                {children}
+            </Flex>
+        </Link>
     );
 };
 
 const MobileNav = ({onOpen, ...rest}) => {
-
     const {logOut, customer} = useAuth()
 
     return (
@@ -165,7 +159,6 @@ const MobileNav = ({onOpen, ...rest}) => {
                 aria-label="open menu"
                 icon={<FiMenu/>}
             />
-
             <Text
                 display={{base: 'flex', md: 'none'}}
                 fontSize="2xl"
@@ -173,7 +166,6 @@ const MobileNav = ({onOpen, ...rest}) => {
                 fontWeight="bold">
                 Logo
             </Text>
-
             <HStack spacing={{base: '0', md: '6'}}>
                 <IconButton
                     size="lg"
@@ -205,7 +197,6 @@ const MobileNav = ({onOpen, ...rest}) => {
                                             {role}
                                         </Text>
                                     ))}
-
                                 </VStack>
                                 <Box display={{base: 'none', md: 'flex'}}>
                                     <FiChevronDown/>

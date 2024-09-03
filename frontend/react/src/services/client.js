@@ -6,13 +6,24 @@ const getAuthConfig = () => ({
     }
 })
 
-
 export const getCustomers = async (sortBy = "ID", sortDirection = "ASC") => {
     try {
         return await axios.get(
             `${import.meta.env.VITE_API_BASE_URL}/api/v1/customers?sortBy=${sortBy}&sortDirection=${sortDirection}`,
             getAuthConfig()
         );
+    } catch (e) {
+        throw e;
+    }
+};
+
+export const getCustomerById = async (customerId) => {
+    try {
+        const response = await axios.get(
+            `${import.meta.env.VITE_API_BASE_URL}/api/v1/customers/${customerId}`,
+            getAuthConfig()
+        );
+        return response.data;
     } catch (e) {
         throw e;
     }
@@ -86,7 +97,7 @@ export const searchCustomersByParameter = async (searchBy, query) => {
         const response = await axios.get(
             `${import.meta.env.VITE_API_BASE_URL}/api/v1/customers/search`,
             {
-                params: { searchBy, query },
+                params: {searchBy, query},
                 ...getAuthConfig(),
             }
         );

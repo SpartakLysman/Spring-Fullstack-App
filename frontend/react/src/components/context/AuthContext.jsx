@@ -9,8 +9,7 @@ import {jwtDecode} from "jwt-decode";
 
 const AuthContext = createContext({});
 
-const AuthProvider = ({ children }) => {
-
+const AuthProvider = ({children}) => {
     const [customer, setCustomer] = useState(null);
 
     const setCustomerFromToken = () => {
@@ -23,12 +22,9 @@ const AuthProvider = ({ children }) => {
             })
         }
     }
-
     useEffect(() => {
         setCustomerFromToken();
     }, [])
-
-
 
     const login = async (usernameAndPassword) => {
         return new Promise((resolve, reject) => {
@@ -59,7 +55,7 @@ const AuthProvider = ({ children }) => {
         if (!token) {
             return false;
         }
-        const { exp: expiration } = jwtDecode(token);
+        const {exp: expiration} = jwtDecode(token);
         if (Date.now() > expiration * 1000) {
             logOut()
             return false;

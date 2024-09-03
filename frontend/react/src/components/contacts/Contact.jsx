@@ -12,28 +12,23 @@ import {
     WrapItem,
     FormControl,
     FormLabel,
-    Input,
-    InputGroup,
-    InputLeftElement,
     Textarea,
     Link,
+    Select, Center,
 } from '@chakra-ui/react';
 import {
     MdPhone,
-    MdEmail,
-    MdLocationOn,
-    MdOutlineEmail,
+    MdLocationOn, MdEmail,
 } from 'react-icons/md';
-import { BsGithub, BsDiscord, BsPerson, BsLinkedin } from 'react-icons/bs';
-import { useState } from 'react';
-import axios from 'axios';
+import {BsGithub, BsDiscord, BsLinkedin} from 'react-icons/bs';
+import {useState} from 'react';
 import SidebarWithHeader from "../shared/SideBar.jsx";
 
 const Contact = () => {
     const [formData, setFormData] = useState({
         name: '',
-        email: '',
-        message: ''
+        message: '',
+        platform: 'whatsapp'
     });
 
     const handleChange = (e) => {
@@ -43,16 +38,23 @@ const Contact = () => {
         });
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        try {
-            await axios.post('/api/v1/send-email', formData);
-            alert('Message sent successfully!');
-            setFormData({ name: '', email: '', message: '' });
-        } catch (error) {
-            console.error('There was an error sending the message!', error);
-            alert('Failed to send message.');
+        const {message, platform} = formData;
+        let url;
+
+        switch (platform) {
+            case 'whatsapp':
+                url = `https://wa.me/380735543316?text=${encodeURIComponent(message)}`;
+                break;
+            case 'telegram':
+                url = `https://t.me/Spartak_Lysman?text=${encodeURIComponent(message)}`;
+                break;
+            default:
+                break;
         }
+        window.open(url, '_blank');
+        setFormData({name: '', message: '', platform: 'whatsapp'});
     };
 
     return (
@@ -63,7 +65,7 @@ const Contact = () => {
                 mt={30}
                 centerContent
                 overflow="hidden"
-                w={{ base: 'full', md: 'full' }}
+                w={{base: 'full', md: 'full'}}
                 h="1085"
             >
                 <Flex>
@@ -71,15 +73,15 @@ const Contact = () => {
                         bg="#02054B"
                         color="white"
                         borderRadius="lg"
-                        m={{ sm: 4, md: 16, lg: 10 }}
-                        p={{ sm: 5, md: 5, lg: 16 }}
+                        m={{sm: 4, md: 16, lg: 10}}
+                        p={{sm: 5, md: 5, lg: 16}}
                     >
-                        <Box p={2} h={550}>
-                            <Wrap spacing={{ base: 5, sm: 3, md: 5, lg: 25 }}>
+                        <Box p={2} h={520}>
+                            <Wrap spacing={{base: 5, sm: 3, md: 5, lg: 25}}>
                                 <WrapItem>
                                     <Box>
-                                        <Heading paddingTop={35} paddingLeft={70} m={1}>Contact</Heading>
-                                        <Box py={{ base: 5, sm: 5, md: 8, lg: 50 }}>
+                                        <Heading paddingTop={39} paddingLeft={70} m={1}>Contact</Heading>
+                                        <Box py={{base: 5, sm: 5, md: 8, lg: 50}}>
                                             <VStack pl={0} spacing={3} alignItems="flex-start">
                                                 <Button
                                                     size="md"
@@ -87,19 +89,8 @@ const Contact = () => {
                                                     width="270px"
                                                     variant="ghost"
                                                     color="#DCE2FF"
-                                                    _hover={{ border: '2px solid #1C6FEB' }}
-                                                    leftIcon={<MdPhone color="#1970F1" size="20px" />}
-                                                >
-                                                    +48571518679
-                                                </Button>
-                                                <Button
-                                                    size="md"
-                                                    height="48px"
-                                                    width="270px"
-                                                    variant="ghost"
-                                                    color="#DCE2FF"
-                                                    _hover={{ border: '2px solid #1C6FEB' }}
-                                                    leftIcon={<MdEmail color="#1970F1" size="20px" />}
+                                                    _hover={{border: '2px solid #1C6FEB'}}
+                                                    leftIcon={<MdEmail color="#1970F1" size="20px"/>}
                                                 >
                                                     spartaklysman@gmail.com
                                                 </Button>
@@ -109,18 +100,29 @@ const Contact = () => {
                                                     width="270px"
                                                     variant="ghost"
                                                     color="#DCE2FF"
-                                                    _hover={{ border: '2px solid #1C6FEB' }}
-                                                    leftIcon={<MdLocationOn color="#1970F1" size="20px" />}
+                                                    _hover={{border: '2px solid #1C6FEB'}}
+                                                    leftIcon={<MdPhone color="#1970F1" size="20px"/>}
+                                                >
+                                                    +48571518679
+                                                </Button>
+                                                <Button
+                                                    size="md"
+                                                    height="48px"
+                                                    width="270px"
+                                                    variant="ghost"
+                                                    color="#DCE2FF"
+                                                    _hover={{border: '2px solid #1C6FEB'}}
+                                                    leftIcon={<MdLocationOn color="#1970F1" size="20px"/>}
                                                 >
                                                     Warsaw, Poland
                                                 </Button>
                                             </VStack>
                                         </Box>
                                         <HStack
-                                            mt={{ lg: 10, md: 10 }}
                                             spacing={5}
-                                            px={5}
-                                            alignItems="flex-start"
+                                            px={10}
+                                            pt={4}
+                                            alignItems="center"
                                         >
                                             <Link href="https://www.linkedin.com/in/spartak-lysman/" isExternal>
                                                 <IconButton
@@ -128,8 +130,8 @@ const Contact = () => {
                                                     variant=""
                                                     size="lg"
                                                     isRound
-                                                    _hover={{ bg: '#0D74FF' }}
-                                                    icon={<BsLinkedin size="35px" />}
+                                                    _hover={{bg: '#0D74FF'}}
+                                                    icon={<BsLinkedin size="35px"/>}
                                                 />
                                             </Link>
                                             <Link href="https://github.com/SpartakLysman" isExternal>
@@ -138,8 +140,8 @@ const Contact = () => {
                                                     variant=""
                                                     size="lg"
                                                     isRound
-                                                    _hover={{ bg: '#0D74FF' }}
-                                                    icon={<BsGithub size="35px" />}
+                                                    _hover={{bg: '#0D74FF'}}
+                                                    icon={<BsGithub size="35px"/>}
                                                 />
                                             </Link>
                                             <IconButton
@@ -147,8 +149,8 @@ const Contact = () => {
                                                 variant=""
                                                 size="lg"
                                                 isRound
-                                                _hover={{ bg: '#0D74FF' }}
-                                                icon={<BsDiscord size="35px" />}
+                                                _hover={{bg: '#0D74FF'}}
+                                                icon={<BsDiscord size="35px"/>}
                                             />
                                         </HStack>
                                     </Box>
@@ -157,7 +159,7 @@ const Contact = () => {
                                     <Box
                                         position="absolute"
                                         top="82.5%"
-                                        left="82.5%"
+                                        left="73.5%"
                                         transform="translate(-195%, -365%)"
                                         display="flex"
                                         alignItems="center"
@@ -165,72 +167,63 @@ const Contact = () => {
                                         fontSize="2xl"
                                     >
                                         <Text
-                                            mt={{ sm: 3, md: 3, lg: 5 }}
+                                            mt={{sm: 3, md: 3, lg: 5}}
                                             color="gray.100"
-                                            marginY="40"
+                                            marginY="160"
+                                            marginX={-63}
                                         >
-                                            Fill up the form below to contact
+                                            Form below to contact me!
                                         </Text>
                                     </Box>
                                     <Box bg="white" borderRadius="lg" m={42}>
-                                        <Box m={35} h={400} w={550} color="#0B0E3F">
+                                        <Box m={30} h={370} w={550} color="#0B0E3F">
                                             <VStack spacing={5} as="form" onSubmit={handleSubmit}>
-                                                <FormControl id="name">
-                                                    <FormLabel>Your Name</FormLabel>
-                                                    <InputGroup borderColor="#E0E1E7">
-                                                        <InputLeftElement pointerEvents="none">
-                                                            <BsPerson color="gray.800" />
-                                                        </InputLeftElement>
-                                                        <Input
-                                                            type="text"
-                                                            size="md"
-                                                            placeholder="Write your name"
-                                                            name="name"
-                                                            value={formData.name}
-                                                            onChange={handleChange}
-                                                        />
-                                                    </InputGroup>
+                                                <FormControl id="platform">
+                                                    <Center>
+                                                        <FormLabel paddingTop={2} paddingBottom={1} fontWeight={600}
+                                                                   fontSize={20}>Choose Messaging Platform</FormLabel>
+                                                    </Center>
+                                                    <Select
+                                                        name="platform"
+                                                        value={formData.platform}
+                                                        onChange={handleChange}
+                                                        borderColor="#E0E1E7"
+                                                    >
+                                                        <option value="whatsapp">WhatsApp</option>
+                                                        <option value="telegram">Telegram</option>
+                                                    </Select>
                                                 </FormControl>
-                                                <FormControl id="email">
-                                                    <FormLabel>Your Email</FormLabel>
-                                                    <InputGroup borderColor="#E0E1E7">
-                                                        <InputLeftElement pointerEvents="none">
-                                                            <MdOutlineEmail color="gray.800" />
-                                                        </InputLeftElement>
-                                                        <Input
-                                                            type="email"
-                                                            size="md"
-                                                            placeholder="Write your email address"
-                                                            name="email"
-                                                            value={formData.email}
-                                                            onChange={handleChange}
-                                                        />
-                                                    </InputGroup>
-                                                </FormControl>
+
                                                 <FormControl id="message">
-                                                    <FormLabel>Message</FormLabel>
+                                                    <Center>
+                                                        <FormLabel paddingTop={3} paddingBottom={1} fontWeight={600}
+                                                                   fontSize={20}>Type Your Message</FormLabel>
+                                                    </Center>
                                                     <Textarea
                                                         h={120}
                                                         borderColor="gray.300"
                                                         _hover={{
                                                             borderRadius: 'gray.300',
                                                         }}
-                                                        placeholder="Type a message"
+                                                        placeholder="Message"
                                                         name="message"
                                                         value={formData.message}
                                                         onChange={handleChange}
                                                     />
                                                 </FormControl>
-                                                <FormControl float="right">
-                                                    <Button
-                                                        type="submit"
-                                                        variant="solid"
-                                                        bg="#0D74FF"
-                                                        color="white"
-                                                        _hover={{}}
-                                                    >
-                                                        Send Message
-                                                    </Button>
+                                                <FormControl paddingTop={5}>
+                                                    <Center>
+                                                        <Button
+                                                            size="lg"
+                                                            type="submit"
+                                                            variant="solid"
+                                                            bg="#0D74FF"
+                                                            color="white"
+                                                            _hover={{}}
+                                                        >
+                                                            Send Message
+                                                        </Button>
+                                                    </Center>
                                                 </FormControl>
                                             </VStack>
                                         </Box>

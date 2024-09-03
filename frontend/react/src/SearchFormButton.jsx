@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
     Button,
     Modal,
@@ -13,18 +13,31 @@ import {
     Input,
     Stack,
     useDisclosure,
-    Box, Tag, Heading, Text
+    Box,
+    Spinner,
+    Text,
+    Wrap,
+    WrapItem,
+    Divider,
+    Heading,
+    Flex,
+    Icon,
 } from '@chakra-ui/react';
-import { SearchIcon } from '@chakra-ui/icons';
-import { searchCustomersByParameter } from './services/client.js';
+import {SearchIcon} from '@chakra-ui/icons';
+import {getCustomerById, searchCustomersByParameter} from './services/client.js';
+import {errorNotification} from "./services/notification.js";
+import CardWithImage from "./components/customer/CustomerCard.jsx";
+import {BiRefresh} from "react-icons/bi";
 
 const SearchFormButton = () => {
-    const { isOpen, onOpen, onClose } = useDisclosure();
+    const {isOpen, onOpen, onClose} = useDisclosure();
     const [step, setStep] = useState('select');
     const [searchParameter, setSearchParameter] = useState('');
     const [formData, setFormData] = useState('');
     const [searchResults, setSearchResults] = useState([]);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [showResults, setShowResults] = useState(false); // Changed from hasSearched
 
     const handleParameterClick = (parameter) => {
         setSearchParameter(parameter);
@@ -37,30 +50,49 @@ const SearchFormButton = () => {
 
     const handleSubmit = async () => {
         setError('');
+        setLoading(true);
+        setShowResults(true);
         try {
-            console.log("Searching for", searchParameter, "with query", formData);
+            // Search for customers by parameter
             const results = await searchCustomersByParameter(searchParameter, formData);
             console.log("Search results:", results);
-            setSearchResults(results);
-            resetForm();
+
+            // Extract customer IDs from the search results
+            const customerIds = results.map(customer => customer.id);
+
+            // Fetch full customer details for each ID
+            const fullCustomerDetails = await Promise.all(customerIds.map(id => getCustomerById(id)));
+            console.log("Full customer details:", fullCustomerDetails);
+
+            // Update the search results state with the full details
+            setSearchResults(fullCustomerDetails);
+
+            // Close the modal but keep results visible
             onClose();
         } catch (e) {
             setError('Search failed. Please try again.');
             console.error("Search error:", e);
+            errorNotification(e.code, e.message);
+        } finally {
+            setLoading(false);
         }
+    };
+
+    const handleRefresh = () => {
+        setSearchResults([]);
+        setShowResults(false); // Hide results section when refreshing
     };
 
     const resetForm = () => {
         setSearchParameter('');
         setFormData('');
         setStep('select');
-        setSearchResults([]);
     };
 
     return (
         <>
             <Button
-                rightIcon={<SearchIcon />}
+                rightIcon={<SearchIcon/>}
                 colorScheme="blue"
                 onClick={() => {
                     resetForm();
@@ -71,12 +103,11 @@ const SearchFormButton = () => {
             >
                 Search
             </Button>
-
             <Modal isOpen={isOpen} onClose={onClose}>
-                <ModalOverlay />
+                <ModalOverlay/>
                 <ModalContent bg="gray.300" color="black">
                     <ModalHeader>{step === 'select' ? 'Select a search parameter' : `Search by ${searchParameter}`}</ModalHeader>
-                    <ModalCloseButton />
+                    <ModalCloseButton/>
                     <ModalBody>
                         {step === 'select' ? (
                             <Stack spacing={5} maxW={350} marginX={6}>
@@ -106,13 +137,12 @@ const SearchFormButton = () => {
                             </Stack>
                         )}
                     </ModalBody>
-
                     <ModalFooter>
                         {step === 'select' ? (
-                            <Button isDisabled></Button>
+                            <Button isDisabled size={0}></Button>
                         ) : (
                             <>
-                                <Button colorScheme="blue" mr={3} onClick={handleSubmit}>
+                                <Button colorScheme="blue" mr={3} onClick={handleSubmit} isLoading={loading}>
                                     Search
                                 </Button>
                                 <Button variant="ghost" onClick={resetForm}>
@@ -126,21 +156,44 @@ const SearchFormButton = () => {
                     </ModalFooter>
                 </ModalContent>
             </Modal>
-
             <Box p={4}>
-                {error && <p>{error}</p>}
-                {searchResults.length > 0 && (
-                    <Stack spacing={3} mt={4}>
-                        {searchResults.map((customer) => (
-                            <Box key={customer.id} p={3} borderWidth={1} borderRadius="md">
-                                <h3>Name: {customer.name}</h3>
-                                <p>Email: {customer.email}</p>
-                                <p>Age: {customer.age}</p>
-                                <p>Age: {customer.gender}</p>
-                            </Box>
-                        ))}
-                    </Stack>
-
+                {showResults && (
+                    <>
+                        <Divider my="7" borderColor="black" borderWidth={5}/>
+                        <Flex
+                            direction="column"
+                            align="center"
+                            justify="center"
+                        >
+                            <Heading mb={1}>Search results: {searchResults.length}</Heading>
+                            <Flex align="center" justify="center" gap={2}>
+                                <Text textAlign="center">
+                                    Click to remove search results
+                                </Text>
+                                <Icon as={BiRefresh} boxSize={8} onClick={handleRefresh}/>
+                            </Flex>
+                        </Flex>
+                        {error && <Text color="red.500">{error}</Text>}
+                        {loading ? (
+                            <Spinner/>
+                        ) : (
+                            searchResults.length > 0 && (
+                                <Wrap justify={"center"} spacing={"30px"} mt={4}>
+                                    {searchResults.map((customer) => (
+                                        <WrapItem key={customer.id}>
+                                            <CardWithImage
+                                                {...customer}
+                                                imageNumber={customer.id} // Adjusted to use customer.id
+                                                fetchCustomers={() => {
+                                                }}
+                                            />
+                                        </WrapItem>
+                                    ))}
+                                </Wrap>
+                            )
+                        )}
+                        <Divider my="7" borderColor="black" borderWidth={5}/>
+                    </>
                 )}
             </Box>
         </>

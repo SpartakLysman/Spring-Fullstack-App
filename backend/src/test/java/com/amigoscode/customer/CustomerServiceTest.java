@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -467,33 +468,73 @@ class CustomerServiceTest {
         assertThat(result).isEqualTo(expectedDTOs);
     }
 
-
-
-
     @Test
-    void findCustomerByEmail() {
+    void searchCustomersByName() {
+        String query = "John";
+        String searchBy = "name";
+
+        List<Customer> customers = Collections.singletonList(
+                new Customer(1L, "John Doe", "john@example.com", "password", 25, Gender.MALE, "image1")
+        );
+
+        List<CustomerDTO> expectedDTOs = customers.stream()
+                .map(customerDTOMapper)
+                .collect(Collectors.toList());
+
+        when(customerDAO.findCustomersByName(query)).thenReturn(customers);
+
+        List<CustomerDTO> result = underTest.searchCustomers(query, searchBy);
+
+        assertThat(result).isEqualTo(expectedDTOs);
     }
+
     @Test
-    void findCustomerByName() {
+    void searchCustomersByAge() {
+        String query = "25";
+        String searchBy = "age";
+
+        List<Customer> customers = Collections.singletonList(
+                new Customer(1L, "John Doe", "john@example.com", "password", 25, Gender.MALE, "image1")
+        );
+
+        List<CustomerDTO> expectedDTOs = customers.stream()
+                .map(customerDTOMapper)
+                .collect(Collectors.toList());
+
+        when(customerDAO.findCustomersByAge(Long.parseLong(query))).thenReturn(customers);
+
+        List<CustomerDTO> result = underTest.searchCustomers(query, searchBy);
+
+        assertThat(result).isEqualTo(expectedDTOs);
     }
+
     @Test
-    void findCustomerByAge() {
+    void searchCustomersByEmail() {
+        String query = "john@example.com";
+        String searchBy = "email";
+
+        List<Customer> customers = Collections.singletonList(
+                new Customer(1L, "John Doe", query, "password", 25, Gender.MALE, "image1")
+        );
+
+        List<CustomerDTO> expectedDTOs = customers.stream()
+                .map(customerDTOMapper)
+                .collect(Collectors.toList());
+
+        when(customerDAO.findCustomersByEmail(query)).thenReturn(customers);
+
+        List<CustomerDTO> result = underTest.searchCustomers(query, searchBy);
+
+        assertThat(result).isEqualTo(expectedDTOs);
+    }
+
+    @Test
+    void searchCustomersWithInvalidSearchByCriteria() {
+        String query = "John";
+        String searchBy = "invalidCriteria";
+
+        assertThatThrownBy(() -> underTest.searchCustomers(query, searchBy))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Invalid search criteria: " + searchBy);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

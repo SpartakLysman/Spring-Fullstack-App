@@ -1,6 +1,6 @@
-import { createStandaloneToast } from '@chakra-ui/toast'
+import {createStandaloneToast} from '@chakra-ui/toast'
 
-const { toast } = createStandaloneToast()
+const {toast} = createStandaloneToast()
 
 const notification = (title, description, status) => {
     toast({

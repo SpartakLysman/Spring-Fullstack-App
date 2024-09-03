@@ -20,9 +20,6 @@ import {useNavigate} from "react-router-dom";
 import {useEffect} from "react";
 
 const MyTextInput = ({label, ...props}) => {
-    // useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
-    // which we can spread on <input>. We can use field meta to show an error
-    // message if the field is invalid and it has been touched (i.e. visited)
     const [field, meta] = useField(props);
     return (
         <Box>
@@ -39,7 +36,7 @@ const MyTextInput = ({label, ...props}) => {
 };
 
 const LoginForm = () => {
-    const { login } = useAuth();
+    const {login} = useAuth();
     const navigate = useNavigate();
 
     return (
@@ -86,7 +83,6 @@ const LoginForm = () => {
                             type={"password"}
                             placeholder={"Type your password"}
                         />
-
                         <Button
                             bg={'blue.400'}
                             color={'white'}
@@ -100,14 +96,12 @@ const LoginForm = () => {
                     </Stack>
                 </Form>
             )}
-
         </Formik>
     )
 }
 
 const Login = () => {
-
-    const { customer } = useAuth();
+    const {customer} = useAuth();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -139,7 +133,6 @@ const Login = () => {
                 alignItems={"center"}
                 justifyContent={"center"}
             >
-
                 <Image
                     alt={'Login Image'}
                     objectFit={'fill'}
@@ -147,9 +140,7 @@ const Login = () => {
                         'https://raw.githubusercontent.com/SpartakLysman/Spring-Fullstack-App/main/registration_image.png'
                     }
                     witdth={800}
-                    height={1350}
-
-                    // Adjust the size of the image
+                    height={1350} // Size of the image
                 />
                 <Box
                     position="absolute"
@@ -169,7 +160,7 @@ const Login = () => {
                         </Text>
                     </Link>
                     <h1> 📄</h1>
-                    <Box width="180px"/> {/* Space between the links */}
+                    <Box width="180px"/>
                     <Link href={"https://github.com/SpartakLysman"}>
                         <Text as='b' fontSize={"4xl"} color={"black"} fontWeight={"bold"}>
                             GitHu️b

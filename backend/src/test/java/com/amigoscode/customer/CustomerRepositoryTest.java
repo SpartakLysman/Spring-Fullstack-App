@@ -105,23 +105,10 @@ class CustomerRepositoryTest extends AbstractTestcontainers {
                 .findFirst()
                 .orElseThrow();
 
-       underTest.updateProfileImageId("2222", id);
+        underTest.updateProfileImageId("2222", id);
 
         Optional<Customer> customerOptional = underTest.findById(id);
         assertThat(customerOptional).isPresent().hasValueSatisfying(
                 c -> assertThat(c.getProfileImageId()).isEqualTo("2222"));
     }
-
-    @Test
-    void findCustomerByName() {
-    }
-    @Test
-    void findCustomerByAge() {
-    }
-    @Test
-    void findCustomerByEmail() {
-    }
-
-
-
 }

@@ -12,14 +12,14 @@ import {
     Divider
 } from '@chakra-ui/react';
 import SidebarWithHeader from "./components/shared/SideBar.jsx";
-import { useEffect, useState } from 'react';
-import { getCustomers } from "./services/client.js";
+import {useEffect, useState} from 'react';
+import {getCustomers} from "./services/client.js";
 import CardWithImage from "./components/customer/CustomerCard.jsx";
 import CreateCustomerDrawer from "./components/customer/CreateCustomerDrawer.jsx";
-import { errorNotification } from "./services/notification.js";
-import { ChevronDownIcon } from "@chakra-ui/icons";
+import {errorNotification} from "./services/notification.js";
+import {ChevronDownIcon} from "@chakra-ui/icons";
 import SearchFormButton from "./SearchFormButton.jsx";
-import { SortCriteria, SortDirection } from "./enums/SortEnums.js"
+import {SortCriteria, SortDirection} from "./enums/SortEnums.js"
 
 const Customer = () => {
     const [customers, setCustomers] = useState([]);
@@ -45,15 +45,12 @@ const Customer = () => {
                 setLoading(false);
             });
     };
-
     const handleSort = (criteria, direction) => {
         fetchCustomers(criteria, direction);
     };
-
     useEffect(() => {
         fetchCustomers();
     }, []);
-
     if (loading) {
         return (
             <SidebarWithHeader>
@@ -67,20 +64,18 @@ const Customer = () => {
             </SidebarWithHeader>
         );
     }
-
     if (err) {
         return (
             <SidebarWithHeader>
-                <CreateCustomerDrawer fetchCustomers={fetchCustomers} />
+                <CreateCustomerDrawer fetchCustomers={fetchCustomers}/>
                 <Text mt={5}>Ooops there was an error</Text>
             </SidebarWithHeader>
         );
     }
-
     if (customers.length <= 0) {
         return (
             <SidebarWithHeader>
-                <CreateCustomerDrawer fetchCustomers={fetchCustomers} />
+                <CreateCustomerDrawer fetchCustomers={fetchCustomers}/>
                 <Text mt={5}>No customers available</Text>
             </SidebarWithHeader>
         );
@@ -106,11 +101,9 @@ const Customer = () => {
                     {customerCount} customers
                 </Text>
             </Box>
-
-            <CreateCustomerDrawer fetchCustomers={fetchCustomers} />
-            <SortButton onSort={handleSort} />
-            <SearchFormButton />
-
+            <CreateCustomerDrawer fetchCustomers={fetchCustomers}/>
+            <SortButton onSort={handleSort}/>
+            <SearchFormButton/>
             <Wrap justify={"center"} spacing={"30px"}>
                 {customers.map((customer, index) => (
                     <WrapItem key={index}>
@@ -126,12 +119,12 @@ const Customer = () => {
     );
 };
 
-function SortButton({ onSort }) {
+function SortButton({onSort}) {
     return (
         <Menu>
             <MenuButton
                 as={Button}
-                rightIcon={<ChevronDownIcon />}
+                rightIcon={<ChevronDownIcon/>}
                 colorScheme="blue"
                 position="relative"
                 top="3"
@@ -141,19 +134,19 @@ function SortButton({ onSort }) {
             </MenuButton>
             <MenuList bg="gray.200" color="black">
                 <MenuItem onClick={() => onSort(SortCriteria.ID, SortDirection.ASC)}>Id: Lowest</MenuItem>
-                <Divider my="0" borderColor="gray.300" />
+                <Divider my="0" borderColor="gray.300"/>
                 <MenuItem onClick={() => onSort(SortCriteria.ID, SortDirection.DESC)}>Id: Highest</MenuItem>
-                <Divider my="0" borderColor="gray.300" />
+                <Divider my="0" borderColor="gray.300"/>
                 <MenuItem onClick={() => onSort(SortCriteria.AGE, SortDirection.ASC)}>Age: Lowest</MenuItem>
-                <Divider my="0" borderColor="gray.300" />
+                <Divider my="0" borderColor="gray.300"/>
                 <MenuItem onClick={() => onSort(SortCriteria.AGE, SortDirection.DESC)}>Age: Highest</MenuItem>
-                <Divider my="0" borderColor="gray.300" />
+                <Divider my="0" borderColor="gray.300"/>
                 <MenuItem onClick={() => onSort(SortCriteria.GENDER, SortDirection.DESC)}>Gender: Male First</MenuItem>
-                <Divider my="0" borderColor="gray.300" />
+                <Divider my="0" borderColor="gray.300"/>
                 <MenuItem onClick={() => onSort(SortCriteria.GENDER, SortDirection.ASC)}>Gender: Female First</MenuItem>
-                <Divider my="0" borderColor="gray.300" />
+                <Divider my="0" borderColor="gray.300"/>
                 <MenuItem onClick={() => onSort(SortCriteria.IMAGE, SortDirection.ASC)}>Image: With Image</MenuItem>
-                <Divider my="0" borderColor="gray.300" />
+                <Divider my="0" borderColor="gray.300"/>
                 <MenuItem onClick={() => onSort(SortCriteria.IMAGE, SortDirection.DESC)}>Image: No Image</MenuItem>
             </MenuList>
         </Menu>

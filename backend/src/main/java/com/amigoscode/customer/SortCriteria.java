@@ -16,4 +16,3 @@ public enum SortCriteria {
         return fieldName;
     }
 }
-

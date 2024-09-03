@@ -20,10 +20,9 @@ import {customerProfilePictureUrl, deleteCustomer} from "../../services/client.j
 import {errorNotification, successNotification} from "../../services/notification.js";
 import UpdateCustomerDrawer from "./UpdateCustomerDrawer.jsx";
 
-export default function CardWithImage({id, name, email, age, gender, imageNumber, fetchCustomers}) {
-    const randomUserGender = gender === "MALE" ? "men" : "women";
-
-    const { isOpen, onOpen, onClose } = useDisclosure()
+export default function CardWithImage({id, name, email, age, gender, fetchCustomers}) {
+    //const randomUserGender = gender === "MALE" ? "men" : "women";
+    const {isOpen, onOpen, onClose} = useDisclosure()
     const cancelRef = useRef()
 
     return (
@@ -43,7 +42,7 @@ export default function CardWithImage({id, name, email, age, gender, imageNumber
                     h={'120px'}
                     w={'full'}
                     src={
-                            'https://raw.githubusercontent.com/SpartakLysman/Spring-Fullstack-App/main/palm_tree.png'
+                        'https://raw.githubusercontent.com/SpartakLysman/Spring-Fullstack-App/main/palm_tree.png'
                     }
                     objectFit={'cover'}
                 />
@@ -57,10 +56,10 @@ export default function CardWithImage({id, name, email, age, gender, imageNumber
                         }}
                     />
                 </Flex>
-
                 <Box p={6}>
                     <Stack spacing={2} align={'center'} mb={5}>
-                        <Tag borderRadius={"full"} boxShadow="0 30px 60px rgba(0, 0, 0, 0.3), 0 15px 30px rgba(0, 0, 0, 0.2)">{id}</Tag>
+                        <Tag borderRadius={"full"}
+                             boxShadow="0 30px 60px rgba(0, 0, 0, 0.3), 0 15px 30px rgba(0, 0, 0, 0.2)">{id}</Tag>
                         <Heading fontSize={'2xl'} fontWeight={700} fontFamily={'body'} color={'black'}>
                             {name}
                         </Heading>
@@ -71,7 +70,7 @@ export default function CardWithImage({id, name, email, age, gender, imageNumber
                 <Stack direction={'row'} justify={'center'} spacing={6} p={4}>
                     <Stack>
                         <UpdateCustomerDrawer
-                            initialValues={{ name, email, age }}
+                            initialValues={{name, email, age}}
                             customerId={id}
                             fetchCustomers={fetchCustomers}
                         />
@@ -102,11 +101,9 @@ export default function CardWithImage({id, name, email, age, gender, imageNumber
                                     <AlertDialogHeader fontSize='lg' fontWeight='bold'>
                                         Delete Customer
                                     </AlertDialogHeader>
-
                                     <AlertDialogBody>
                                         Are you sure you want to delete {name}? You can't undo this action afterwards.
                                     </AlertDialogBody>
-
                                     <AlertDialogFooter>
                                         <Button ref={cancelRef} onClick={onClose}>
                                             Cancel
@@ -119,7 +116,6 @@ export default function CardWithImage({id, name, email, age, gender, imageNumber
                                                     `${name} was successfully deleted`
                                                 )
                                                 fetchCustomers();
-
                                             }).catch(err => {
                                                 console.log(err);
                                                 errorNotification(
@@ -137,7 +133,6 @@ export default function CardWithImage({id, name, email, age, gender, imageNumber
                             </AlertDialogOverlay>
                         </AlertDialog>
                     </Stack>
-
                 </Stack>
             </Box>
         </Center>

@@ -75,7 +75,6 @@ public class Main {
         customerRepository.save(customer);
     }
 
-
 /*@Bean("foo") // '("foo")' - to change the name of Bean
 public Foo getFoo() {
     return new Foo("bar");
